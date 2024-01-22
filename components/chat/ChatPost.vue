@@ -172,17 +172,18 @@
 import { ethers } from 'ethers';
 import sanitizeHtml from 'sanitize-html';
 import { useEthers, shortenAddress } from 'vue-dapp';
-import ResolverAbi from "~/assets/abi/ResolverAbi.json";
-import resolvers from "~/assets/data/resolvers.json";
 import { useToast } from "vue-toastification/dist/index.mjs";
 import { useUserStore } from '~/store/user';
 import ProfileImage from "~/components/profile/ProfileImage.vue";
 import IggyPostMint from "~/components/minted-posts/IggyPostMint.vue";
 import MintedPostImage from '~/components/minted-posts/MintedPostImage.vue';
 import ChatQuote from "~/components/chat/ChatQuote.vue";
-import { findFirstCollectionUrl, findFirstUrl, imgParsing, imgWithoutExtensionParsing, urlParsing, youtubeParsing } from '~/utils/textUtils';
+import { getDomainName } from '~/utils/domainUtils';
+import { 
+  getTextWithoutBlankCharacters, findFirstCollectionUrl, findFirstUrl, imgParsing, imgWithoutExtensionParsing, urlParsing, 
+  youtubeParsing 
+} from '~/utils/textUtils';
 import { fetchCollection, fetchUsername, storeCollection, storeUsername } from '~/utils/storageUtils';
-import { getTextWithoutBlankCharacters } from '~/utils/textUtils';
 
 export default {
   name: "ChatPost",
@@ -454,13 +455,7 @@ export default {
             provider = this.signer;
           }
 
-          const contract = new ethers.Contract(resolvers[this.$config.supportedChainId], ResolverAbi, provider);
-
-          // get author's default domain
-          const domainName = await contract.getDefaultDomain(
-            String(this.authorAddress).toLowerCase(), 
-            String(this.$config.tldName).toLowerCase()
-          );
+          const domainName = await getDomainName(this.authorAddress, provider);
 
           if (domainName) {
             this.authorDomain = domainName + this.$config.tldName;
@@ -620,11 +615,6 @@ export default {
           reply_to: this.post.stream_id, // important: reply_to needs to be filled out even if the reply is directly to the master post
           body: this.replyText, 
           context: this.getOrbisContext
-        }
-
-        // if post has tags, add them to the options
-        if (this.post?.content?.tags) {
-          options["tags"] = this.post.content.tags;
         }
 
         // post on Orbis & Ceramic
