@@ -84,8 +84,8 @@ export default defineNuxtConfig({
       linkPreviews: process.env.LINK_PREVIEW_SERVICE || "netlify", // "netlify", "vercel", or "microlink" (or leave empty for no link previews)
       lpTokenAddress: "0xF874f79eBfB8FEe898a289C4cAa5dc4383873431", // liquidity pool token (token to stake in the staking contract)
       lpTokenSymbol: "LP tokens", // LP token symbol
-      marketplacePostNftUrl: "https://testnets.opensea.io/assets/mumbai/0x63FE8216a66737CFE474DF3949F9081EbD4Bd800",
-      marketplacePostNftItemUrl: "https://testnets.opensea.io/assets/mumbai/0x63FE8216a66737CFE474DF3949F9081EbD4Bd800/", // url (append nft id to it)
+      marketplacePostNftUrl: "https://testnets.opensea.io/assets/mumbai/0xb5A9c6096a2A5d761337ae29C018218BCfeeEf73",
+      marketplacePostNftItemUrl: "https://testnets.opensea.io/assets/mumbai/0xb5A9c6096a2A5d761337ae29C018218BCfeeEf73/", // url (append nft id to it)
       marketplaceNftCollectionBaseUrl: "https://testnets.opensea.io/assets/mumbai/", // url (append nft address to it)
       newsletterLink: "https://paragraph.xyz/@iggy?modal=subscribe",
       nftDefaultRatio: 1, // default ratio for the NFT price bonding curve
@@ -93,15 +93,15 @@ export default defineNuxtConfig({
       nftLaunchpadLatestItems: 4, // number of latest NFTs to show in the NFT launchpad
       orbisTest: false, // if true, test context will be used instead of the production one
       orbisTestContext: "kjzl6cwe1jw145tfqv2eqv8tiz6puo27meyz4smz40atppuc13tulqca87k35z2", // test context
-      previewImage: "/img/covers/cover.svg",
-      previewImageAirdrop: "/img/covers/cover-airdrop.svg",
-      previewImageNftCollection: "/img/covers/cover-nft-collection.svg",
-      previewImageNftCreate: "/img/covers/cover-nft-create.svg",
-      previewImageNftLaunchpad: "/img/covers/cover-nft-launchpad.svg",
-      previewImagePost: "/img/covers/cover-post.svg",
-      previewImagePostNft: "/img/covers/cover-post-nft.svg",
-      previewImageProfile: "/img/covers/cover-profile.svg",
-      previewImageStake: "/img/covers/cover-stake.svg",
+      previewImage: "/img/covers/cover.png",
+      previewImageAirdrop: "/img/covers/cover-airdrop.png",
+      previewImageNftCollection: "/img/covers/cover-nft-collection.png",
+      previewImageNftCreate: "/img/covers/cover-nft-create.png",
+      previewImageNftLaunchpad: "/img/covers/cover-nft-launchpad.png",
+      previewImagePost: "/img/covers/cover-post.png",
+      previewImagePostNft: "/img/covers/cover-post-nft.png",
+      previewImageProfile: "/img/covers/cover-profile.png",
+      previewImageStake: "/img/covers/cover-stake.png",
       profileMintedPostIdsMax: 36, // max number of minted post ids to show in the profile page
       projectMetadataTitle: "Iggy Social Demo | Web3 Social Template For Your DAO",
       projectName: "Iggy Demo",

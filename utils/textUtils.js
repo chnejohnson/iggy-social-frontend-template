@@ -11,10 +11,10 @@ export function findFirstCollectionUrl(text) {
   let urlRegex;
 
   try {
-    urlRegex = new RegExp('(https?:\\/\\/(?!.*\\.(jpg|png|jpeg|img|gif|pdf|docx))[^\\s]+)(?<![,.:;?!\\-\\"\')])', 'g');
+    urlRegex = new RegExp('(https?:\\/\\/(?!.*\\.(jpg|png|jpeg|img|gif|webp|pdf|docx))[^\\s]+)(?<![,.:;?!\\-\\"\')])', 'g');
   } catch (error) {
     // fallback to simplified regex (without lookbehinds) in case of an old browser or Safari
-    urlRegex = /(https?:\/\/(?!.*\.(jpg|png|jpeg|img|gif|pdf|docx))[^\s]+)/g;
+    urlRegex = /(https?:\/\/(?!.*\.(jpg|png|jpeg|img|gif|webp|pdf|docx))[^\s]+)/g;
   }
 
   const match = text.match(urlRegex);
@@ -38,10 +38,10 @@ export function findFirstUrl(text) {
   let urlRegex;
 
   try {
-    urlRegex = new RegExp('(https?:\\/\\/(?!.*\\.(jpg|png|jpeg|img|gif|pdf|docx))[^\\s]+)(?<![,.:;?!\\-\\"\')])', 'g');
+    urlRegex = new RegExp('(https?:\\/\\/(?!.*\\.(jpg|png|jpeg|img|gif|webp|pdf|docx))[^\\s]+)(?<![,.:;?!\\-\\"\')])', 'g');
   } catch (error) {
     // fallback to simplified regex (without lookbehinds) in case of an old browser or Safari
-    urlRegex = /(https?:\/\/(?!.*\.(jpg|png|jpeg|img|gif|pdf|docx))[^\s]+)/g;
+    urlRegex = /(https?:\/\/(?!.*\.(jpg|png|jpeg|img|gif|webp|pdf|docx))[^\s]+)/g;
   }
 
   const match = text.match(urlRegex);
@@ -69,7 +69,7 @@ export function findFirstUrl(text) {
 }
 
 export function getImageFromText(text) {
-  let imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i;
+  let imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/i;
   let imageLinks = text.match(imageRegex);
 
   if (!imageLinks) { 
@@ -340,8 +340,8 @@ export function hasTextBlankCharacters(text) {
 export function imgParsing(text) {
   const config = useRuntimeConfig();
 
-  const imageRegex = /(?:https?:\/\/(?:www\.)?)?(?:[-\w]+\.)+[^\s]+\.(?:jpe?g|gif|png|img)/gi;
-  //const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif))/i;
+  const imageRegex = /(?:https?:\/\/(?:www\.)?)?(?:[-\w]+\.)+[^\s]+\.(?:jpe?g|gif|webp|png|img)/gi;
+  //const imageRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/i;
 
   if (!imageRegex.test(text)) { return text };
 
@@ -380,20 +380,21 @@ export function urlParsing(text) {
   let urlRegex;
 
   try {
-    urlRegex = new RegExp('(https?:\\/\\/(?!.*\\.(jpg|png|jpeg|img|gif|pdf|docx))[^\\s]+)(?<![,.:;?!\\-\\"\')])', 'g');
+    urlRegex = new RegExp('(https?:\\/\\/(?!.*\\.(jpg|png|jpeg|img|gif|webp|pdf|docx))[^\\s]+)(?<![,.:;?!\\-\\"\')])', 'g');
   } catch (error) {
     // fallback to simplified regex (without lookbehinds) in case of an old browser or Safari
-    urlRegex = /(https?:\/\/(?!.*\.(jpg|png|jpeg|img|gif|pdf|docx))[^\s]+)/g;
+    urlRegex = /(https?:\/\/(?!.*\.(jpg|png|jpeg|img|gif|webp|pdf|docx))[^\s]+)/g;
   }
 
   if (!urlRegex.test(text)) { return text };
 
   return text.replace(urlRegex, function(url) {
 
-    // remove referrals from our website links
-    if (url.startsWith(window.location.origin)) {
+    // remove this website referrals from the chat
+    if (url.startsWith(window.location.origin) || url.startsWith(String(window.location.origin).replace("https://", "http://"))) {
       if (url.includes("ref=")) {
-        url = url.replace("ref=", "noref="); // the easiest solution to not break a URL
+        //url = url.replace("ref=", "noref="); // the easiest solution to not break a URL
+        return "(referral links not allowed)";
       }
     }
 
